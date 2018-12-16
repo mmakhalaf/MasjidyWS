@@ -1,0 +1,54 @@
+type PrayerTimeResponse {
+    mosqueId: Int!
+    monthDay: Int!
+    year: Int!
+    fajr: Int!
+    fajrJamaa: Int!
+    thuhr: Int!
+    thuhrJamaa: Int!
+    asr: Int!
+    asrJamaa: Int!
+    maghrib: Int!
+    maghribJamaa: Int!
+    ishaa: Int!
+    ishaaJamaa: Int!
+}
+
+type PrayerTimeListResponse {
+    prayerTimes: [PrayerTimeResponse]
+}
+
+type MosqueResponse {
+    id: Int!
+    name: String!
+    addressLine1: String!
+    addressLine2: String
+    addressLine3: String
+    city: String
+    country: String
+    postcode: String
+    latitude: Float!
+    longitude: Float!
+    getPrayerTimes: PrayerTimeListResponse
+    getPrayerTimesInRange(year: Int!, startMonthDay: Int!, endMonthDat: Int!): PrayerTimeListResponse
+}
+
+type MosqueListResponse {
+    mosques: [MosqueResponse]
+}
+
+type MosqueDistResponse {
+    mosque: MosqueResponse
+    distance: Float
+}
+
+type MosqueDistListResponse {
+    mosques: [MosqueDistResponse]
+}
+
+
+type Query {
+    getMosqueById(id: Int!): MosqueResponse
+    findMosqueByLocation(lat: Float!, lng: Float!, radius_km: Float!, withPrayerOnly: Boolean): MosqueDistListResponse
+    getAllMosques(withPrayersOnly: Boolean): MosqueListResponse
+}
